@@ -41,6 +41,12 @@ TagManager:
   - name: Floor
     uniqueID: 3964296061
     locked: 0
+  - name: Plants And Rocks
+    uniqueID: 396840253
+    locked: 0
+  - name: 3
+    uniqueID: 2750080823
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
