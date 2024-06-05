@@ -108,34 +108,10 @@ public class PlayerController : MonoBehaviour
     IEnumerator AttackRoutine()
     {
         Debug.Log("Spawning Projectile");
-        SpawnProjectile();
+        MagicMissile.SpawnProjectile(projectilePrefab, projectileSpawnPoint, lastMoveDirection);
         yield return new WaitForSeconds(0.5f);
         isAttacking = false;
         animator.SetBool("IsAttacking", false);
     }
 
-    void SpawnProjectile()
-    {
-        Debug.Log("Spawning projectile");
-
-        if (projectilePrefab == null || projectileSpawnPoint == null)
-        {
-            Debug.LogError("Projectile Prefab or Spawn Point is not assigned!");
-            return;
-        }
-
-        Vector2 spawnPosition = (Vector2)projectileSpawnPoint.position + lastMoveDirection * 0.5f; // Adjust the offset as needed
-        GameObject magicMissile = Instantiate(projectilePrefab, spawnPosition, Quaternion.identity);
-        MagicMissile magicMissileScript = magicMissile.GetComponent<MagicMissile>();
-
-        if (magicMissileScript == null)
-        {
-            Debug.LogError("MagicMissile script not found on the instantiated projectile!");
-            return;
-        }
-
-        magicMissileScript.direction = lastMoveDirection; // Pass direction to missile
-        Debug.Log("Setting direction: " + lastMoveDirection);
-        magicMissile.transform.parent = null; // Detach from the player
-    }
 }
