@@ -1,2 +1,2 @@
 # FairyTale
-A Short RPG Experience for the GameDevTV Jam! 
+A Short RPG Experience♥
