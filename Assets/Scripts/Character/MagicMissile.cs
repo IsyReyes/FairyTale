@@ -52,4 +52,29 @@ public class MagicMissile : MonoBehaviour
         Debug.Log("MagicMissile collided with: " + collision.gameObject.name);
         Destroy(gameObject);
     }
+
+    public static  void SpawnProjectile(GameObject projectilePrefab, Transform projectileSpawnPoint, Vector2 lastMoveDirection)
+    {
+        Debug.Log("Spawning projectile");
+
+        if (projectilePrefab == null || projectileSpawnPoint == null)
+        {
+            Debug.LogError("Projectile Prefab or Spawn Point is not assigned!");
+            return;
+        }
+
+        Vector2 spawnPosition = (Vector2)projectileSpawnPoint.position + lastMoveDirection * 0.5f; // Adjust the offset as needed
+        GameObject magicMissile = Instantiate(projectilePrefab, spawnPosition, Quaternion.identity);
+        MagicMissile magicMissileScript = magicMissile.GetComponent<MagicMissile>();
+
+        if (magicMissileScript == null)
+        {
+            Debug.LogError("MagicMissile script not found on the instantiated projectile!");
+            return;
+        }
+
+        magicMissileScript.direction = lastMoveDirection; // Pass direction to missile
+        Debug.Log("Setting direction: " + lastMoveDirection);
+        magicMissile.transform.parent = null; // Detach from the player
+    }
 }
