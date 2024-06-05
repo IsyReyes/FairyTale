@@ -16,6 +16,10 @@ public class PlayerController : MonoBehaviour
     public GameObject projectilePrefab;
     public Transform projectileSpawnPoint;
 
+    private InputInterface moveCommand;
+    private InputInterface attackCommand;
+    private InputInterface interactCommand;
+
     InteractionLogic interactionLogic;
 
     private void Start()
@@ -52,6 +56,8 @@ public class PlayerController : MonoBehaviour
             {
                 movement = new Vector2(moveX, moveY).normalized;
                 lastMoveDirection = movement;
+                moveCommand = new MoveCommand(this, movement);
+                moveCommand.ExecuteInputRequest();
             }
             else
             {
@@ -60,13 +66,13 @@ public class PlayerController : MonoBehaviour
 
             if (Input.GetButtonDown("Fire1"))
             {
-                isAttacking = true;
-                StartCoroutine(AttackRoutine());
+                attackCommand = new AttackCommand(this);
+                attackCommand.ExecuteInputRequest();
             }
 
             if (Input.GetButtonDown("Interact")){
-                interactionLogic = new InteractionLogic();
-                interactionLogic.Interact();
+                interactCommand = new InteractCommand(this);
+                interactCommand.ExecuteInputRequest();
             }
         }
     }
@@ -76,7 +82,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!isAttacking)
         {
-            Move();
+            Move(movement);
         }
         else
         {
@@ -84,13 +90,24 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void Move()
+    public void Move( Vector2 direction)
     {
-        rb.velocity = new Vector2(movement.x * movementSpeed, movement.y * movementSpeed);
+        rb.velocity = direction * movementSpeed;
+    }
+
+    public void Attack(){
+        isAttacking = true;
+        StartCoroutine(AttackRoutine());
+    }
+
+    public void Interact(){
+        interactionLogic = new InteractionLogic();
+        interactionLogic.Interact();
     }
 
     IEnumerator AttackRoutine()
     {
+        Debug.Log("Spawning Projectile");
         SpawnProjectile();
         yield return new WaitForSeconds(0.5f);
         isAttacking = false;
