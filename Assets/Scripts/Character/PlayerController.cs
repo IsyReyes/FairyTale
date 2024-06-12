@@ -96,16 +96,19 @@ public class PlayerController : MonoBehaviour
     }
 
     public void Interact(){
+
         Debug.Log("Attempting to interact");
         if (currentInteractable != null && currentInteractable.isInRange){
+            Debug.Log("Interacting with: " + currentInteractable.gameObject.name);
             currentInteractable.InteractTriggered();
         }else{
-            Debug.Log("Unable to Interact. Can't find a current interactable object");
+            Debug.Log("Unable to interact. currentInteractable is " + (currentInteractable == null ? "null" : currentInteractable.gameObject.name) + ", isInRange: " + (currentInteractable != null && currentInteractable.isInRange));
         }
     }
 
     public void SetCurrentInteractable(InteractionLogic interactable)
     {
+        Debug.Log("SetCurrentInteractable called with: " + (interactable != null ? interactable.gameObject.name : "null"));
         currentInteractable = interactable;
     }
 

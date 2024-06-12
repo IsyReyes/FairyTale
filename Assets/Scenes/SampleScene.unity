@@ -45214,6 +45214,7 @@ GameObject:
   - component: {fileID: 1221231326}
   - component: {fileID: 1221231328}
   - component: {fileID: 1221231327}
+  - component: {fileID: 1221231330}
   - component: {fileID: 1221231329}
   m_Layer: 0
   m_Name: InteractArea_Chest
@@ -45253,7 +45254,7 @@ MonoBehaviour:
   interactAction:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: -5595405200351963616, guid: e20df6d09504180458571117c5c741f2, type: 3}
+      - m_Target: {fileID: 1221231330}
         m_TargetAssemblyTypeName: OpenChest, Assembly-CSharp
         m_MethodName: InteractChest
         m_Mode: 1
@@ -45312,6 +45313,18 @@ SortingGroup:
   m_SortingLayer: 1
   m_SortingOrder: 0
   m_SortAtRoot: 0
+--- !u!114 &1221231330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1221231325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06cbaedf3b2b17c479fad944a807ce0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1222066792
 GameObject:
   m_ObjectHideFlags: 0
@@ -71126,6 +71139,10 @@ PrefabInstance:
     - target: {fileID: 960933314286663196, guid: e20df6d09504180458571117c5c741f2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5362157003326769698, guid: e20df6d09504180458571117c5c741f2, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9215761716224407956, guid: e20df6d09504180458571117c5c741f2, type: 3}
       propertyPath: m_Name
