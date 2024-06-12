@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     private InputInterface attackCommand;
     private InputInterface interactCommand;
 
-    InteractionLogic interactionLogic;
+    private InteractionLogic currentInteractable;
 
     private void Start()
     {
@@ -95,14 +95,26 @@ public class PlayerController : MonoBehaviour
         rb.velocity = direction * movementSpeed;
     }
 
+    public void Interact(){
+
+        Debug.Log("Attempting to interact");
+        if (currentInteractable != null && currentInteractable.isInRange){
+            Debug.Log("Interacting with: " + currentInteractable.gameObject.name);
+            currentInteractable.InteractTriggered();
+        }else{
+            Debug.Log("Unable to interact. currentInteractable is " + (currentInteractable == null ? "null" : currentInteractable.gameObject.name) + ", isInRange: " + (currentInteractable != null && currentInteractable.isInRange));
+        }
+    }
+
+    public void SetCurrentInteractable(InteractionLogic interactable)
+    {
+        Debug.Log("SetCurrentInteractable called with: " + (interactable != null ? interactable.gameObject.name : "null"));
+        currentInteractable = interactable;
+    }
+
     public void Attack(){
         isAttacking = true;
         StartCoroutine(AttackRoutine());
-    }
-
-    public void Interact(){
-        interactionLogic = new InteractionLogic();
-        interactionLogic.Interact();
     }
 
     IEnumerator AttackRoutine()
@@ -113,5 +125,7 @@ public class PlayerController : MonoBehaviour
         isAttacking = false;
         animator.SetBool("IsAttacking", false);
     }
+
+
 
 }
