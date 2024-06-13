@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 movement;
     private Vector2 lastMoveDirection;
     private bool isAttacking = false;
+    private bool isInteracting = false;
 
     public GameObject projectilePrefab;
     public Transform projectileSpawnPoint;
@@ -78,9 +79,9 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    private void FixedUpdate()
+    public void FixedUpdate()
     {
-        if (!isAttacking)
+        if (!isAttacking && !isInteracting)
         {
             Move(movement);
         }
@@ -115,6 +116,15 @@ public class PlayerController : MonoBehaviour
     public void Attack(){
         isAttacking = true;
         StartCoroutine(AttackRoutine());
+    }
+
+    public void LockMovement() {
+        isInteracting = true;
+        rb.velocity = Vector2.zero;
+    }
+
+    public void UnlockMovement(){
+        isInteracting = false;
     }
 
     IEnumerator AttackRoutine()
