@@ -1,29 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
 public class DialogueManager : MonoBehaviour
 {
     public GameObject dialogueBox;
-    public Text dialogueText;
+    public TMP_Text dialogueText;
 
     private Queue<string> sentences;
+    private bool dialogueStarted;
 
     void Start()
     {
         sentences = new Queue<string>();
-        dialogueBox.SetActive(false); // Initially hide the dialogue box
+        dialogueBox.SetActive(false);
+        dialogueStarted = false;
     }
 
     public void StartDialogue(Dialogue dialogue)
     {
-        dialogueBox.SetActive(true);
-        sentences.Clear();
-
-        foreach (string sentence in dialogue.sentences)
+        if (!dialogueStarted)
         {
-            sentences.Enqueue(sentence);
+            Debug.Log("Starting new dialogue interaction.");
+            dialogueBox.SetActive(true);
+            sentences.Clear();
+
+            foreach (string sentence in dialogue.sentences)
+            {
+                sentences.Enqueue(sentence);
+            }
+
+            dialogueStarted = true;
         }
 
         DisplayNextSentence();
@@ -33,11 +41,13 @@ public class DialogueManager : MonoBehaviour
     {
         if (sentences.Count == 0)
         {
+            Debug.Log("No more phrases to display. Requesting text box closure.");
             EndDialogue();
             return;
         }
 
         string sentence = sentences.Dequeue();
+        Debug.Log("Displaying sentence: " + sentence);
         StopAllCoroutines();
         StartCoroutine(TypeSentence(sentence));
     }
@@ -54,6 +64,10 @@ public class DialogueManager : MonoBehaviour
 
     void EndDialogue()
     {
+        Debug.Log("Closing text box.");
         dialogueBox.SetActive(false);
+        FindObjectOfType<PlayerController>().UnlockMovement();
+        dialogueStarted = false; // Reset dialogue status
     }
 }
+
