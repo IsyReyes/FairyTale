@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Interactable
+  - Chest
   layers:
   - Default
   - TransparentFX
@@ -12,9 +13,9 @@ TagManager:
   - Floor
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Foreground
+  - CAMLIMITER
+  - TEXT BOX
   - 
   - 
   - 
@@ -39,6 +40,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: CAMLIMITER
+    uniqueID: 1791622787
+    locked: 0
   - name: Floor
     uniqueID: 3964296061
     locked: 0
@@ -56,4 +60,7 @@ TagManager:
     locked: 0
   - name: Character
     uniqueID: 3512854379
+    locked: 0
+  - name: TEXT BOX
+    uniqueID: 3129254839
     locked: 0

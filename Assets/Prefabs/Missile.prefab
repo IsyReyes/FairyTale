@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3778782318702555674}
   - component: {fileID: 3962233170100350256}
   - component: {fileID: 882824962844454855}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Missile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -194,7 +194,7 @@ SortingGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6936781708181124588}
   m_Enabled: 1
-  m_SortingLayerID: 411386147
-  m_SortingLayer: -2
+  m_SortingLayerID: 154148325
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_SortAtRoot: 0

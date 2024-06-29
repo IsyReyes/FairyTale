@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 movement;
     private Vector2 lastMoveDirection;
     private bool isAttacking = false;
+    private bool isInteracting = false;
 
     public GameObject projectilePrefab;
     public Transform projectileSpawnPoint;
@@ -20,7 +21,7 @@ public class PlayerController : MonoBehaviour
     private InputInterface attackCommand;
     private InputInterface interactCommand;
 
-    InteractionLogic interactionLogic;
+    private InteractionLogic currentInteractable;
 
     private void Start()
     {
@@ -78,9 +79,9 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    private void FixedUpdate()
+    public void FixedUpdate()
     {
-        if (!isAttacking)
+        if (!isAttacking && !isInteracting)
         {
             Move(movement);
         }
@@ -95,14 +96,35 @@ public class PlayerController : MonoBehaviour
         rb.velocity = direction * movementSpeed;
     }
 
+    public void Interact(){
+
+        Debug.Log("Attempting to interact");
+        if (currentInteractable != null && currentInteractable.isInRange){
+            Debug.Log("Interacting with: " + currentInteractable.gameObject.name);
+            currentInteractable.InteractTriggered();
+        }else{
+            Debug.Log("Unable to interact. currentInteractable is " + (currentInteractable == null ? "null" : currentInteractable.gameObject.name) + ", isInRange: " + (currentInteractable != null && currentInteractable.isInRange));
+        }
+    }
+
+    public void SetCurrentInteractable(InteractionLogic interactable)
+    {
+        Debug.Log("SetCurrentInteractable called with: " + (interactable != null ? interactable.gameObject.name : "null"));
+        currentInteractable = interactable;
+    }
+
     public void Attack(){
         isAttacking = true;
         StartCoroutine(AttackRoutine());
     }
 
-    public void Interact(){
-        interactionLogic = new InteractionLogic();
-        interactionLogic.Interact();
+    public void LockMovement() {
+        isInteracting = true;
+        rb.velocity = Vector2.zero;
+    }
+
+    public void UnlockMovement(){
+        isInteracting = false;
     }
 
     IEnumerator AttackRoutine()
@@ -113,5 +135,7 @@ public class PlayerController : MonoBehaviour
         isAttacking = false;
         animator.SetBool("IsAttacking", false);
     }
+
+
 
 }

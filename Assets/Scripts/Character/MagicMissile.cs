@@ -48,7 +48,6 @@ public class MagicMissile : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        // Add collision logic here (e.g., damage to enemies)
         Debug.Log("MagicMissile collided with: " + collision.gameObject.name);
         Destroy(gameObject);
     }
